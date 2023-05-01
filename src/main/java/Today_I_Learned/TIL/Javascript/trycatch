@@ -1,0 +1,33 @@
+여러개의 jsp에서 공통으로 사용하는 js파일이 있는 경우(ex : editor)
+
+A.jsp에 temp1이라는 변수가 선언되어 있지만 B.jsp에서는 선언되어있지 않을때,
+
+공통 js 에서 아래와 같이 처리하려고 하면 B에서 undefined 가 발생한다.
+
+
+if(temp == 'Y') {
+	var tempChk = true;
+}
+
+
+temp라는 값을 찾지 못하기 때문이다.
+
+
+
+다음과 같은 상황에서 B에서도 에러가 발생하지 않기 위해서는 try ~ catch를 사용하면 된다.
+
+
+try {
+	if(temp == 'Y') {
+    	var tempChk = true;
+    } else {
+    	var tempChk = false;
+    }
+} catch(exception) {
+	var tempChk = false;
+}
+위와 같이 처리하면, A에서는 temp가 존재하기 때문에 temp의 값이 Y인지를 확인하여 tempChk의 값을 정하게 되고,
+
+B에서는 temp의 값을 찾을 수 없기 때문에 catch문을 통하여 tempChk의 값을 false로 처리하기 때문에
+
+이후 로직에서 tempChk의 값을 활용하더라도 에러가 발생하지 않는다.
